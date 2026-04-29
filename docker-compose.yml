@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+
+  gateway:
+    build: ./api-gateway
+    ports:
+      - "5000:5000"
+
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "5001:5000"
+    env_file:
+      - .env
+
+  ticket-service:
+    build: ./services/ticket-service
+
+  message-service:
+    build: ./services/message-service
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: "Y"
+    ports:
+    - "1433:1433"
