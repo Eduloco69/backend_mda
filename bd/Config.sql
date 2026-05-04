@@ -1,0 +1,17 @@
+SET IDENTITY_INSERT [categoria] ON
+GO
+
+SET IDENTITY_INSERT [subCategoriaTicket] ON
+GO
+
+SET IDENTITY_INSERT [departamento] ON
+GO
+
+SET IDENTITY_INSERT [categoria] OFF
+GO
+
+SET IDENTITY_INSERT [subCategoriaTicket] OFF
+GO
+
+SET IDENTITY_INSERT [departamento] OFF
+GO

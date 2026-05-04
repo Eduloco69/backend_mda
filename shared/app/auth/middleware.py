@@ -1,7 +1,9 @@
 from flask import request
-from app.utils.jwt_handler import verify_token
+from shared.app.auth.jwt_handler import verify_token
+from functools import wraps
 
 def auth_required(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         token = request.cookies.get("access_token")
 

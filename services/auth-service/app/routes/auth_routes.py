@@ -1,12 +1,12 @@
 from flask import Blueprint, request
-from app.controllers.auth_controller import register, login, logout
-from app.middleware.auth_middleware import auth_required
+from app.controllers.auth_controller import register, login, logout, get_perfil
+from shared.app.auth.middleware import auth_required
 
 auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/")
 def ping():
-    return "Hola"
+    return "Conexión Ok"
 
 @auth_bp.route("/register", methods=["POST"])
 def register_route():
@@ -19,8 +19,14 @@ def login_route():
 @auth_bp.route("/perfil", methods=["GET"])
 @auth_required
 def perfil():
-    return {"user": request.user}
+    return get_perfil()
 
 @auth_bp.route("/logout", methods=["POST"])
 def logout_route():
     return logout()
+
+@auth_bp.route("/verify", methods=['GET'])
+@auth_required
+def verify():
+    data = request.user
+    return data

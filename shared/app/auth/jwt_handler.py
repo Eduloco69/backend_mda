@@ -8,6 +8,7 @@ def generate_token(user):
     payload = {
         "userId": user["userId"],
         "email": user["userMail"],
+        "permisos": user["permisos"],
         "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=8)
     }
 

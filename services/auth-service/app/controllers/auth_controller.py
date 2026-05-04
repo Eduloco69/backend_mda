@@ -1,5 +1,5 @@
 from flask import request, jsonify, make_response
-from app.services.auth_service import register_user, login_user
+from app.services.auth_service import register_user, login_user, perfil_user
 
 def register():
     data = request.json
@@ -22,7 +22,7 @@ def login():
         httponly=True,
         secure=False,
         samesite="Lax",
-        max_age=60*60*8
+        max_age=60*60*12
     )
 
     return response
@@ -31,3 +31,16 @@ def logout():
     response = make_response({"message": "Logout exitoso"})
     response.delete_cookie("access_token")
     return response
+
+def get_perfil():
+    user_id = request.user["userId"]
+
+    data = perfil_user(user_id)
+
+    return jsonify(data)
+
+def verificar_sesion():
+    user_id = request.user["userId"]
+    return ""
+
+    

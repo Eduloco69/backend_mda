@@ -64,14 +64,14 @@ CREATE TABLE [estadoTicket] (
 GO
 
 CREATE TABLE [subCategoriaTicket] (
-  [subCatId] int PRIMARY KEY,
+  [subCatId] int PRIMARY KEY IDENTITY(1,1),
   [subCat] varchar(50),
   [categoriaId] int
 )
 GO
 
 CREATE TABLE [categoria] (
-  [categoriaId] int PRIMARY KEY,
+  [categoriaId] int PRIMARY KEY IDENTITY(1,1),
   [categoria] varchar(50)
 )
 GO
@@ -145,7 +145,7 @@ CREATE TABLE [solicitante] (
 GO
 
 CREATE TABLE [departamento] (
-  [departamentoId] int PRIMARY KEY,
+  [departamentoId] int PRIMARY KEY IDENTITY(1,1),
   [nombre] varchar(50),
   [tipoDepartamento] varchar(20)
 )
@@ -159,7 +159,7 @@ CREATE TABLE [permisos] (
 GO
 
 CREATE TABLE [rolPermiso] (
-  [id] int PRIMARY KEY,
+  [id] int PRIMARY KEY IDENTITY(1,1),
   [rolId] int,
   [permisoId] int
 )
