@@ -80,4 +80,65 @@ SET IDENTITY_INSERT [subCategoriaTicket] OFF;
 SET IDENTITY_INSERT [MesaDeAyuda].[dbo].[departamento] ON;
 
 INSERT INTO [MesaDeAyuda].[dbo].[departamento] (departamentoId, nombre, tipoDepartamento) VALUES (1, 'Administrador', 'tecnico')
+INSERT INTO [MesaDeAyuda].[dbo].[departamento] (departamentoId, nombre, tipoDepartamento) VALUES (2, 'Contabilidad', 'usuario')
+INSERT INTO [MesaDeAyuda].[dbo].[departamento] (departamentoId, nombre, tipoDepartamento) VALUES (3, 'Ventas', 'usuario')
+
 SET IDENTITY_INSERT [MesaDeAyuda].[dbo].[departamento] OFF;
+
+/*Permisos iniciales*/
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (1, 'VER_MENU_TICKETS', 'Ver el menú de tickets')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (2, 'VER_TICKETS_TODOS', 'Ver tickets de todos')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (3, 'VER_MENU_DASHBOARDS', 'Ver dashboards')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (4, 'VER_MENU_USUARIOS', 'Ver el menú de parametrizacion usuarios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (5, 'VER_MENU_CONFIGURACION', 'Ver el menú de configuración de sistema')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (6, 'VER_MENU_NUEVO_TICKET', 'Ver menú para crear ticket')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (7, 'VER_MENU_PERFIL', 'Ver perfil propio')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (8, 'CHATBOT', 'Ver y usar el chatbot para crear tickets')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (9, 'CREAR_TICKETS', 'Permite crear tickets propios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (10, 'CREAT_TICKET_TEC', 'Permite crear tickets a otros usuarios, se asignan automaticamente a quien los envia')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (11, 'CREAR_TICKETS_ADMIN', 'Permite crear tickets a otros usuarios y asignarlos a uno mismo u otro usuario')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (12, 'ASIGNAR_TICKETS', 'Permite asignar un ticket a uno mismo')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (13, 'ASIGNAR_TICKETS_ADMIN', 'Permite asignar un ticket a uno mismo u otro usuario')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (14, 'MODIFICAR_TICKET', 'Permite modificar el tipo de ticket, categoría, subcategoría y prioridad de un ticket')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (15, 'GESTIONAR_TICKET', 'Permite modificar el estado de un ticket')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (16, 'GESTIONAR_TICKET_ADMIN', 'Permite modificar el estado de un ticket sin restricción')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (17, 'GESTIONAR_USUARIOS', 'Gestionar Usuarios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (18, 'CREAR_USUARIOS', 'Crear usuarios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (19, 'MODIFICAR_USUARIOS', 'Modificar Usuarios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (20, 'BLOQUEAR_USUARIOS', 'Bloquear usuarios')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (21, 'GESTIONAR_PARAMETROS', 'Gestionar parametros')
+INSERT INTO [MesaDeAyuda].[dbo].[permisos] VALUES (22, 'MODIFICAR_PARAMETROS', 'Modificar parametros')
+
+/*Permisos a Administrador*/
+INSERT INTO [MesaDeAyuda].[dbo].[rolPermiso]
+(
+    [rolId],
+    [permisoId]
+)
+SELECT
+    1,
+    p.permisoId
+FROM [MesaDeAyuda].[dbo].[permisos] p
+WHERE NOT EXISTS
+(
+    SELECT 1
+    FROM [MesaDeAyuda].[dbo].[rolPermiso] rp
+    WHERE rp.rolId = 1
+    AND rp.permisoId = p.permisoId
+);
+
+/*Prioridad Ticket*/
+SET IDENTITY_INSERT [MesaDeAyuda].[dbo].[prioridadTicket] ON;
+
+INSERT INTO [MesaDeAyuda].[dbo].[prioridadTicket]
+(
+    [idPrioridad],
+    [prioridadTicket]
+)
+VALUES
+    (1, 'Baja'),
+    (2, 'Media'),
+    (3, 'Alta'),
+    (4, 'Crítica');
+
+SET IDENTITY_INSERT [MesaDeAyuda].[dbo].[prioridadTicket] OFF;

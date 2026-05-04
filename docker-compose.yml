@@ -19,6 +19,13 @@ services:
 
   ticket-service:
     build: ./services/ticket-service
+    ports:
+      - "5002:5000"
+    env_file:
+      - .env
+    volumes:
+      - ./services/ticket-service:/app
+      - ./shared:/shared
 
   message-service:
     build: ./services/message-service

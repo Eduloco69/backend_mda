@@ -30,7 +30,7 @@ GO
 CREATE TABLE [ticket] (
   [ticketId] int IDENTITY(1,1) PRIMARY KEY,
   [NroTicket] varchar(20) UNIQUE,
-  [tituloTicket] varchar(30),
+  [tituloTicket] varchar(50),
   [ticketDesc] varchar(255),
   [estadoTicket] int,
   [tipoTicket] int,
