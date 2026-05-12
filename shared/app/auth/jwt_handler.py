@@ -15,7 +15,11 @@ def generate_token(user):
     return jwt.encode(payload, SECRET, algorithm="HS256")
 
 def verify_token(token):
+    print("verificando")
     try:
+        print(SECRET)
         return jwt.decode(token, SECRET, algorithms=["HS256"])
-    except:
+    except Exception as e:
+        print("JWT ERROR:", type(e).__name__)
+        print("JWT DETAIL:", str(e))
         return None

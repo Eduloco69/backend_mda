@@ -1,0 +1,43 @@
+.login-page{
+
+  width:100%;
+  height:100vh;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  background:#f5f7fb;
+}
+
+
+.login-form{
+
+  width:350px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:20px;
+
+  background:white;
+
+  padding:40px;
+
+  border-radius:12px;
+}
+
+
+.login-form input{
+
+  padding:12px;
+}
+
+
+.login-form button{
+
+  padding:12px;
+
+  cursor:pointer;
+}

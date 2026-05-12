@@ -1,4 +1,8 @@
 from app.database.connection import get_connection
+from app.utils.permisos import resolve_creation_mode
+from app.utils.ticket_nro import generate_ticket_number
+from app.utils.crear_ticket import build_payload, insert_ticket, save_attachments, insert_history, save_uploaded_file, update_ticket_number, insert_initial_message
+from datetime import datetime
 import math
 
 def ver_tickets(userId, permisos, request):
@@ -100,3 +104,47 @@ def ver_tickets(userId, permisos, request):
             'Mensaje':'Error al obtener los tickets',
             'Error':str(e)
             }, 400
+    
+def crear_tickets_service(user_id, permisos, data, files):
+
+    mode = resolve_creation_mode(permisos)
+
+    payload = build_payload(
+        mode,
+        user_id,
+        data
+    )
+
+    print(payload)
+
+    try:
+
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        ticket_id = insert_ticket(cursor, payload)
+        nro_ticket = generate_ticket_number(ticket_id)
+        update_ticket_number(cursor, ticket_id, nro_ticket)
+        mensaje_id = insert_initial_message(cursor, ticket_id, payload["ticketDesc"], user_id)
+        save_attachments(cursor, ticket_id, mensaje_id, user_id, files)
+        insert_history(cursor, ticket_id, user_id)
+
+        conn.commit()
+
+        return {
+            'Mensaje':'Ticket creado correctamente',
+            'ticketId':ticket_id,
+            'NroTicket':nro_ticket
+        }
+    except Exception as e:
+        conn.rollback()
+        return {
+            'Mensaje':'Error creando Ticket', 
+            'Error':str(e)
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+def ver_detalle_ticket():
+    return "hola"
